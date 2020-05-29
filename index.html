@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/stylesheet.css" type="text/css" charset="utf-8" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+    <script src="https://use.fontawesome.com/4d7624cc78.js"></script>
+
+    <style>
+        .h-btns{
+            animation-delay: 2s;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1 class=" text-center text-info " style="font-family: adamnormal !important;"> ONLINE CALCULATOR</h1>
+</div> 
+
+<div class="container">
+    <div class="row">
+        <div class="col-1 col-md-3 text-center">
+                
+        </div>
+        <div class="col-10 col-md-6 text-center ">
+                <div  class="m-1 rounded border border-info text-right p-4 ">
+                    <h6 id="secondary-display"></h6>
+                      <h4 id="main-display" ></h4>  
+                </div>
+                <br>
+                <div class="row m-1 rounded border border-info button-hover-select">
+                    <!-- row1 -->
+                    <div class="col-3  p-4 h-btns-d text-danger" id="all-clear">
+                        AC    
+                    </div>
+                    <div class="col-3  p-4 h-btns-w text-warning" val="/" operand="div">
+                        /
+                    </div>
+                    <div class="col-3  p-4 h-btns-w text-warning" val="*" operand="mult">
+                        *
+                    </div>
+                    <div class="col-3 h-btns-d text-danger p-4"  id="clear">
+                        C
+                    </div>
+                     <!-- row1 -->
+                     <div class="col-3  p-4 h-btns " val="7" >
+                        7    
+                    </div>
+                    <div class="col-3  p-4 h-btns" val="8">
+                        8
+                    </div>
+                    <div class="col-3  p-4 h-btns" val="9">
+                        9
+                    </div>
+                    <div class="col-3  p-4 h-btns-d text-danger"> 
+                        <i class="fa fa-refresh"></i>
+                    </div>
+                     <!-- row1 -->
+                     <div class="col-3  p-4 h-btns" val="4">
+                        4    
+                    </div>
+                    <div class="col-3  p-4 h-btns" val="5">
+                        5
+                    </div>
+                    <div class="col-3  p-4 h-btns" val="6">
+                        6
+                    </div>
+                    <div class="col-3  p-4 h-btns-w text-warning" val="-" operand="sub">
+                        -
+                    </div>
+                     <!-- row1 -->
+                     <div class="col-3  p-4 h-btns" val="1">
+                        1    
+                    </div>
+                    <div class="col-3  p-4 h-btns" val="2">
+                        2
+                    </div>
+                    <div class="col-3  p-4 h-btns" val="3">
+                        3
+                    </div>
+                    <div class="col-3   p-4 h-btns-w text-warning" val="+" operand="add">
+                        +
+                    </div>
+                    <!-- row1 -->
+                    <div class="col-3  p-4 h-btns " val=".">
+                        .    
+                    </div>
+                    <div class="col-3  p-4 h-btns" val="0">
+                        0
+                    </div>
+                    <div class="col-6  p-4 h-btns-s text-success" id="equal">
+                        =
+                    </div> 
+                </div>
+                <div class="row m-1 rounded border border-info button-hover-select">
+                   <button id="foo" class="col-5 btn btn-primary" onclick="bootsequence()">Sequence <i id="playstatus" class="fa fa-play" onclick="loopBoot()" val="paused"></i></button>
+                   <button class="col-4 btn btn-warning" onclick="operatorAnim()">Operators</button>
+                   <button class="col-3 btn btn-danger" onclick="clearAnim()">Clear</button>
+                </div>
+
+        </div>
+        <div class="col-1 col-md-3 text-center ">
+                
+        </div>
+    </div>
+</div>
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="js/animations.js"></script>
+<script>
+</script>
+
+<script>
+    $(document).ready(function() {
+        bootsequence();
+        });
+    $(".h-btns").click(function(){
+       var value = $(this).attr("val");
+       var temp=$("#main-display").append(value);
+
+    });
+    $("#clear").click(function(){
+        clear();
+    });
+    $("#all-clear").click(function(){
+        operandCount=0;
+        getOperand=false;
+        oldResult = false;
+        Allclear();
+    });
+    function clear(){
+        $("#main-display").html("");
+    }
+    function Allclear(){
+        clear();
+        $("#secondary-display").html("");
+    }
+    var op1=0;
+    var op2=0;
+    var operator="";
+    var operandCount=0;
+    var getOperand=false;
+    var oldResult = false;
+    var oldResultValue=0;
+    $(".h-btns-w").click(function(){
+        if(operandCount==0){
+        op1=$("#main-display").html();
+        operator = $(this).attr("operand");
+        operatordisp = $(this).attr("val");
+        console.log(operator);
+        $("#secondary-display").append(op1+operatordisp);
+        getOperand=true;
+        operandCount=1;
+        clear();
+        }
+        
+    });
+    var result=0;
+    $("#equal").click(function(){
+        if(getOperand){
+          op2=$("#main-display").html();
+        $("#secondary-display").append(op2);
+        console.log(operator);
+        clear();
+        switch (operator){
+            case "add":
+            result=parseFloat(op1)+parseFloat(op2);
+            $("#main-display").html(result);
+            break;
+            case "sub":
+            result=parseFloat(op1)-parseFloat(op2);
+            $("#main-display").html(result);
+            break;
+            case "mult":
+            result=parseFloat(op1)*parseFloat(op2);
+            $("#main-display").html(result);
+            break;
+            case "div":
+            result=parseFloat(op1)/parseFloat(op2);
+            $("#main-display").html(result);
+            break;
+
+            oldResultValue=result;
+        }
+        
+        getOperand=false;
+        }
+        
+    });
+    
+</script>
+
+<script>
+    $(".h-btns").hover(function(){
+  $(this).addClass("border border-primary  text-info animated pulse fast");
+  }, function(){
+  $(this).removeClass("border border-primary  text-info animated pulse fast");
+});
+</script>
+<script>
+    $(".h-btns-s").hover(function(){
+  $(this).addClass("border border-success  text-white animated pulse fast");
+  }, function(){
+  $(this).removeClass("border border-success  text-white animated pulse fast");
+});
+</script>
+<script>
+    $(".h-btns-d").hover(function(){
+  $(this).addClass("border border-danger  text-white animated pulse fast");
+  }, function(){
+  $(this).removeClass("border border-danger  text-white animated pulse fast");
+});
+</script>
+<script>
+    $(".h-btns-w").hover(function(){
+  $(this).addClass("border border-warning  text-white animated pulse fast");
+  }, function(){
+  $(this).removeClass("border border-warning  text-white animated pulse fast");
+});
+</script>
+</body>
+</html>
