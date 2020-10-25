@@ -10,7 +10,7 @@ function bootsequence(){
     clearInterval( delay );
     removeAnim()
   }
-}, 50);
+}, 100);
 operatorAnim();
 clearAnim();
 }
@@ -25,7 +25,7 @@ function operatorAnim(){
     clearInterval( delay1 );
     removeAnim1()
   }
-}, 150);
+}, 250);
 }
 function clearAnim(){
     var divs2 = $( '.h-btns-d' );
@@ -55,7 +55,7 @@ function removeAnim(){
   }else{
     clearInterval( delay );
   }
-}, 100);
+}, 200);
 }
 function removeAnim1(){
     var divs = $( '.h-btns-w' );
@@ -67,7 +67,7 @@ function removeAnim1(){
   }else{
     clearInterval( delay );
   }
-}, 100);
+}, 200);
 }
 function removeAnim2(){
     var divs = $( '.h-btns-d' );
@@ -79,7 +79,7 @@ function removeAnim2(){
   }else{
     clearInterval( delay );
   }
-}, 100);
+}, 200);
 }
 
 
